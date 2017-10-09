@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Новости{% endblock %}
+
+{% block body %}
+{% for entry in entries %}
+<article>
+  <header>
+    <h1 class="entry-title">
+      {{ entry.title }}
+    </h1>
+    <p class="meta">
+      <time datetime="{{ entry.date | strftime("%Y-%m-%dT%H:%M:%SZ") }}" pubdate data-updated="true">
+        {{ entry.date | strftime }}
+      </time>
+      {% if session.logged_in %} |
+      <a href="{{ url_for('del_entry', post_id=entry.id) }}">Удалить</a>
+      {% endif %}
+    </p>
+  </header>
+
+  <div class="entry-content">
+  <p><em>
+		{% for line in entry.text.splitlines() %}
+			{{ line|safe }} <br />
+		{% endfor %}
+	</em></p>
+  </div>
+</article>
+{% else %}
+<article><p><em>No entries.... </em></p></article>
+{% endfor %}
+{% endblock %}

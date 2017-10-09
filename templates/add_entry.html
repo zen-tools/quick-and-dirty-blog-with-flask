@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}Добавить новость{% endblock %}
+
+{% block body %}
+{% if session.logged_in %}
+<article>
+<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+	<dl>
+		<dt>Заголовок:
+		<dd>
+			<input type="text" size=35 name="title">
+		<dt>Сообщение:
+		<dd><textarea name=text rows=4 cols=40></textarea>
+		<dd><input type="submit" value="Добавить">
+	</dl>
+</form>
+</article> <!-- input -->
+{% endif %}
+{% endblock %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <title>{% block title %}{% endblock %} - Hi-Tec</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+
+  <link href="{{ url_for('static', filename='stylesheets/screen.css') }}" media="screen, projection" type="text/css" rel="stylesheet">
+  </head>
+<body>
+
+<header role="banner">
+  <header role="banner">
+    <hgroup>
+      <a href="/" id="super-logo"></a>
+      <h1><a href="/">Новости высоких технологий</a></h1>
+    </hgroup>
+  </header>
+</header>
+
+<nav role="navigation">
+  <ul class="subscription">
+		{% if not session.logged_in %}
+		<li><a href="{{ url_for('login') }}">Вход</a></li>
+		{% else %}
+		<li><a href="{{ url_for('logout') }}">Выход</a></li>
+		{% endif %}
+  </ul>
+
+  <ul class="main-navigation">
+    <li><a href="/">Новости</a></li>
+		{% if session.logged_in %}
+		<li><a href="{{ url_for('add_entry') }}">Добавить новость</a></li>
+		{% endif %}
+  </ul>
+</nav>
+
+<div id="main">
+  <div id="content">
+
+<div class="blog-index">
+	{% for message in get_flashed_messages() %}
+	<div class=flash> {{ message }} </div>
+	{% endfor %}
+	{% block body %} {% endblock %}
+	<!-- div class="pagination">
+			<a class="prev" href="/page/2/">&larr; Раньше</a>
+  </div -->
+</div>
+
+<aside class="sidebar">
+<section>
+	<h2 class="aboutpod" id="aboutpod" style="margin-top:0; font-size:11pt; font-weight: normal; text-transform: none; color: #5e5e5e">
+		Разговоры на темы хайтек, высоких компьютерных технологий, гаджетов, облаков, программирования и прочего интересного из мира ИТ.
+	</h2>
+</section>
+
+<section>
+		<h2>Полезное</h2>
+
+		<ul class="links">
+				<li><a href="https://stackoverflow.com">stackoverflow.com</a></li>
+				<li><a href="https://linux.org.ua">linux.org.ua</a></li>
+		</ul>
+</section>
+</aside>
+
+
+		</div>
+	</div>
+
+	<footer role="contentinfo">
+		<p>
+			Some rights reserved, 2017 - <a href="mailto:example@example.com">example@example.com</a>
+		</p>
+	</footer>
+
+</body>
+</html>
