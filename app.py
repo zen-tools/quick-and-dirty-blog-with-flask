@@ -11,6 +11,16 @@ from flask import (
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
+from flaskext.auth import Auth
+from flaskext.auth import AuthUser
+auth = Auth(app)
+
+@app.before_request
+def init_users():
+    admin = AuthUser( username = 'admin' )
+    admin.set_and_encrypt_password('password')
+    auth.users = { 'admin': admin }
+
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
@@ -74,14 +84,13 @@ def login():
         return redirect('/')
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username or password'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid username or password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
+        username = request.form['username']
+        if username in auth.users:
+            if auth.users[username].authenticate(request.form['password']):
+                session['logged_in'] = True
+                flash('You were logged in')
+                return redirect(url_for('show_entries'))
+        return 'Failure'
     return render_template('login.html', error=error)
 
 
