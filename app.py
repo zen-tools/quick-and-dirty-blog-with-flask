@@ -7,19 +7,19 @@ from flask import (
     Flask, request, session, redirect,
     url_for, abort, render_template, flash
 )
+from flaskext.auth import Auth
+from flaskext.auth import AuthUser
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
-
-from flaskext.auth import Auth
-from flaskext.auth import AuthUser
 auth = Auth(app)
+
 
 @app.before_request
 def init_users():
-    admin = AuthUser( username = 'admin' )
-    admin.set_and_encrypt_password('password')
-    auth.users = { 'admin': admin }
+    admin = AuthUser(username=app.config['USERNAME'])
+    admin.set_and_encrypt_password(app.config['PASSWORD'])
+    auth.users = {'admin': admin}
 
 
 @app.teardown_appcontext
@@ -90,7 +90,7 @@ def login():
                 session['logged_in'] = True
                 flash('You were logged in')
                 return redirect(url_for('show_entries'))
-        return 'Failure'
+        error = 'Invalid username or password'
     return render_template('login.html', error=error)
 
 
