@@ -7,9 +7,23 @@ from flask import (
     Flask, request, session, redirect,
     url_for, abort, render_template, flash
 )
+from flask_sqlalchemy import SQLAlchemy
+from flaskext.auth import Auth
+from flaskext.auth import AuthUser
+
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
+db = SQLAlchemy()
+db.init_app(app)
+auth = Auth(app)
+
+
+@app.before_request
+def init_users():
+    admin = AuthUser(username=app.config['USERNAME'])
+    admin.set_and_encrypt_password(app.config['PASSWORD'])
+    auth.users = {'admin': admin}
 
 
 @app.teardown_appcontext
@@ -74,14 +88,13 @@ def login():
         return redirect('/')
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username or password'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid username or password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
+        username = request.form['username']
+        if username in auth.users:
+            if auth.users[username].authenticate(request.form['password']):
+                session['logged_in'] = True
+                flash('You were logged in')
+                return redirect(url_for('show_entries'))
+        error = 'Invalid username or password'
     return render_template('login.html', error=error)
 
 

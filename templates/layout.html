@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>{% block title %}{% endblock %} - Hi-Tec</title>
+  <title>{% block title %}{% endblock %} - Ні-Тес</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,7 +20,7 @@
   <header role="banner">
     <hgroup>
       <a href="/" id="super-logo"></a>
-      <h1><a href="/">Новости высоких технологий</a></h1>
+      <h1><a href="/">Новини високих технологій</a></h1>
     </hgroup>
   </header>
 </header>
@@ -28,16 +28,16 @@
 <nav role="navigation">
   <ul class="subscription">
 		{% if not session.logged_in %}
-		<li><a href="{{ url_for('login') }}">Вход</a></li>
+		<li><a href="{{ url_for('login') }}">Вхід</a></li>
 		{% else %}
-		<li><a href="{{ url_for('logout') }}">Выход</a></li>
+		<li><a href="{{ url_for('logout') }}">Вихід</a></li>
 		{% endif %}
   </ul>
 
   <ul class="main-navigation">
-    <li><a href="/">Новости</a></li>
+    <li><a href="/">Новини</a></li>
 		{% if session.logged_in %}
-		<li><a href="{{ url_for('add_entry') }}">Добавить новость</a></li>
+		<li><a href="{{ url_for('add_entry') }}">Додати новину</a></li>
 		{% endif %}
   </ul>
 </nav>
@@ -51,19 +51,19 @@
 	{% endfor %}
 	{% block body %} {% endblock %}
 	<!-- div class="pagination">
-			<a class="prev" href="/page/2/">&larr; Раньше</a>
+			<a class="prev" href="/page/2/">&larr; Раніше</a>
   </div -->
 </div>
 
 <aside class="sidebar">
 <section>
 	<h2 class="aboutpod" id="aboutpod" style="margin-top:0; font-size:11pt; font-weight: normal; text-transform: none; color: #5e5e5e">
-		Разговоры на темы хайтек, высоких компьютерных технологий, гаджетов, облаков, программирования и прочего интересного из мира ИТ.
+        Бесіди на теми високих комп'ютерних технологій, ґаджетів, хмаросховищ, програмування та інших цікавинок зі світу ІТ.
 	</h2>
 </section>
 
 <section>
-		<h2>Полезное</h2>
+		<h2>Корисне</h2>
 
 		<ul class="links">
 				<li><a href="https://stackoverflow.com">stackoverflow.com</a></li>
@@ -78,7 +78,7 @@
 
 	<footer role="contentinfo">
 		<p>
-			Some rights reserved, 2017 - <a href="mailto:example@example.com">example@example.com</a>
+			Деякі права захищено, 2017 - <a href="mailto:example@example.com">example@example.com</a>
 		</p>
 	</footer>
 

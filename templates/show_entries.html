@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Новости{% endblock %}
+{% block title %}Новини{% endblock %}
 
 {% block body %}
 {% for entry in entries %}
@@ -14,7 +14,7 @@
         {{ entry.date | strftime }}
       </time>
       {% if session.logged_in %} |
-      <a href="{{ url_for('del_entry', post_id=entry.id) }}">Удалить</a>
+      <a href="{{ url_for('del_entry', post_id=entry.id) }}">Видалити</a>
       {% endif %}
     </p>
   </header>
@@ -28,6 +28,6 @@
   </div>
 </article>
 {% else %}
-<article><p><em>No entries.... </em></p></article>
+<article><p><em>Нема записів.... </em></p></article>
 {% endfor %}
 {% endblock %}
