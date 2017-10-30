@@ -7,11 +7,15 @@ from flask import (
     Flask, request, session, redirect,
     url_for, abort, render_template, flash
 )
+from flask_sqlalchemy import SQLAlchemy
 from flaskext.auth import Auth
 from flaskext.auth import AuthUser
 
+
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
+db = SQLAlchemy()
+db.init_app(app)
 auth = Auth(app)
 
 
