@@ -21,6 +21,7 @@ def init_users():
 # TODO add this to `populate_db` script
 #    admin = AuthUser(username=app.config['USERNAME'])
 #    admin.set_and_encrypt_password(app.config['PASSWORD'])
+    pass
 
 
 @app.teardown_appcontext
