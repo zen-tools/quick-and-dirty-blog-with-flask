@@ -18,6 +18,10 @@ class User(Base):
     def __repr__(self):
         return '<User %r>' % (self.name)
 
+    @staticmethod
+    def load(username, password):
+        return 1
+
 
 class PostItem(Base):
     __tablename__ = 'posts'

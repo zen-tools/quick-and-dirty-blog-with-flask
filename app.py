@@ -1,29 +1,26 @@
 #!/usr/bin/env python
 
 from sqlalchemy import desc
-from models import PostItem
+from models import User, PostItem
 from database import db_session
 from flask import (
     Flask, request, session, redirect,
     url_for, abort, render_template, flash
 )
 from flask_sqlalchemy import SQLAlchemy
-from flaskext.auth import Auth
-from flaskext.auth import AuthUser
 
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 db = SQLAlchemy()
 db.init_app(app)
-auth = Auth(app)
 
 
 @app.before_request
 def init_users():
-    admin = AuthUser(username=app.config['USERNAME'])
-    admin.set_and_encrypt_password(app.config['PASSWORD'])
-    auth.users = {'admin': admin}
+# TODO add this to `populate_db` script
+#    admin = AuthUser(username=app.config['USERNAME'])
+#    admin.set_and_encrypt_password(app.config['PASSWORD'])
 
 
 @app.teardown_appcontext
@@ -89,11 +86,11 @@ def login():
     error = None
     if request.method == 'POST':
         username = request.form['username']
-        if username in auth.users:
-            if auth.users[username].authenticate(request.form['password']):
-                session['logged_in'] = True
-                flash('You were logged in')
-                return redirect(url_for('show_entries'))
+        password = request.form['password']
+        if User.load(username, password):
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('show_entries'))
         error = 'Invalid username or password'
     return render_template('login.html', error=error)
 
