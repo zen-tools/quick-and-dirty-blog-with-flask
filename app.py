@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from sqlalchemy import desc
 from models import User, PostItem
 from database import db_session
@@ -12,7 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
-db = SQLAlchemy()
+db = SQLAlchemy(app)
 db.init_app(app)
 
 
