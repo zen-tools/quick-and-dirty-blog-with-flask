@@ -1,3 +1,5 @@
-venv
-test.db
 *.pyc
+config.py
+db_repo/
+test.db
+venv

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Добавить новость{% endblock %}
+{% block title %}Додати новину{% endblock %}
 
 {% block body %}
 {% if session.logged_in %}
@@ -10,9 +10,9 @@
 		<dt>Заголовок:
 		<dd>
 			<input type="text" size=35 name="title">
-		<dt>Сообщение:
+		<dt>Повідомлення:
 		<dd><textarea name=text rows=4 cols=40></textarea>
-		<dd><input type="submit" value="Добавить">
+		<dd><input type="submit" value="Додати">
 	</dl>
 </form>
 </article> <!-- input -->
